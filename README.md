@@ -1,28 +1,96 @@
-# Framework AF: Model Kerja Berbasis AI
+# Framework-AF
 
-Repositori ini memuat panduan, standar keamanan, dan model kerja berbasis AI untuk pembangunan sistem informasi web modern (PHP 8.2+, MySQL 8, PWA) yang aman dan siap dipublikasikan ke aplikasi mobile.
+> **Production-Hardened AI Agent Governance & Execution-Driven Engineering**  
+> *Standar Rekayasa Perangkat Lunak Aman Berbasis PHP 8.2+, MySQL 8, PWA, dan DevSecOps.*
 
-## Dokumentasi Utama
+Framework-AF adalah model kerja dan tata kelola rekayasa perangkat lunak yang dirancang khusus untuk memandu kolaborasi antara pengembang manusia dan AI Agent (Gemini, Antigravity, Cursor, Cline, dll.) agar **fokus penuh pada penyelesaian software development** secara aman dan modular.
 
-Dokumen lengkap model kerja dapat dibaca di:
-- 📖 [Model Kerja Berbasis AI: Pembangunan Sistem Informasi Web Aman (PHP, MySQL, PWA)](docs/model-kerja.md)
+---
 
-## Struktur Folder Repositori
+## 🎯 4 Pursuit Goals (Sasaran Utama)
 
-```text
-framework-AF/
-├── docs/
-│   └── model-kerja.md     # Panduan lengkap model kerja & standar keamanan
-└── README.md              # Ringkasan repositori
+Setiap pengerjaan modul dalam Framework-AF wajib mengacu pada 4 sasaran:
+1. **Target Fungsional:** Menyelesaikan fitur per modul utuh (*Vertical Slice*).
+2. **Target Keamanan:** Nol celah keamanan kritis/tinggi (OWASP Top 10) & bebas kebocoran kredensial (*Zero Secret Leak*).
+3. **Target Kualitas:** Lulus pemeriksaan deterministik 100% (PHP Syntax Lint, Gitleaks, PHPStan level 6+, PHPUnit).
+4. **Target PWA & Mobile:** Kompatibel mobile-first, skor Lighthouse PWA $\ge 90$, Service Worker aman, dan siap rilis TWA/Capacitor.
+
+---
+
+## 🛡️ Mekanisme Penegakan Kepatuhan (4-Layer Hard Enforcement)
+
+Framework-AF tidak hanya mengandalkan instruksi teks, melainkan membatasi pelanggaran secara sistematis:
+
+```
+[Developer / AI Agent Menulis Kode]
+               │
+               ▼
+┌──────────────────────────────────────────────┐
+│ LAPIS 1: Contextual Guardrail (AGENTS.md)    │ ➔ AI terikat sejak awal prompt
+└──────────────────────┬───────────────────────┘
+                       │ (Kode dibuat)
+                       ▼
+┌──────────────────────────────────────────────┐
+│ LAPIS 2: Local Pre-Commit Gate (Git Hooks)   │ ➔ Blokir commit jika sintaks rusak / secret bocor
+└──────────────────────┬───────────────────────┘
+                       │ (Commit berhasil, Push)
+                       ▼
+┌──────────────────────────────────────────────┐
+│ LAPIS 3: Remote CI/CD Hard Gate (Pipeline)   │ ➔ Blokir merge jika tes/analisis statis gagal
+└──────────────────────┬───────────────────────┘
+                       │ (CI/CD Hijau 100%)
+                       ▼
+┌──────────────────────────────────────────────┐
+│ LAPIS 4: Dual-Agent Review & Human Sign-off  │ ➔ Auditor independen & persetujuan pengembang
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+             [FITUR SELESAI (DONE)]
 ```
 
-## Inti Model Kerja
+---
 
-1. **Human-in-the-loop**: AI mengusulkan, manusia meninjau, menguji, dan memutuskan.
-2. **Security by Design**: Memenuhi standar OWASP, prepared statement PDO, proteksi CSRF, cookie hardening, sanitasi file upload, dan CSP.
-3. **PWA & Mobile Ready**: Satu basis kode web yang dapat dipasang di layar utama dan dikemas ke Google Play via TWA (Bubblewrap) atau Capacitor.
-4. **4 Skill Pendukung**:
-   - `analis-sistem-php` (Fase Kebutuhan)
-   - `perancang-database-mysql` (Fase Desain Database)
-   - `perancang-ui-ux-pwa` (Fase Desain Tampilan & Interaksi)
-   - `pengecekan-keamanan-web` (Fase Audit & Review Keamanan)
+## 📂 Struktur Repositori
+
+```text
+├── .github/
+│   └── workflows/
+│       └── ci.yml               # Pipeline GitHub Actions (Lint, Gitleaks, PHPStan, Test)
+├── .githooks/
+│   └── pre-commit               # Git hook lokal (PHP Lint, Gitleaks, PHPStan)
+├── docs/
+│   ├── model-kerja.md           # Dokumentasi teknis & standar keamanan lengkap
+│   └── PURSUIT_GOALS.md         # Matriks pelacakan kemajuan fitur
+├── AGENTS.md                    # Aturan wajib bagi AI Agent (Lapis 1)
+├── phpstan.neon                 # Konfigurasi analisis statis PHPStan
+└── .gitignore                   # Proteksi berkas privat & kredensial
+```
+
+---
+
+## 🚀 Panduan Memulai Cepat (Quick Start)
+
+### 1. Inisialisasi & Konfigurasi Git Hook Lokal
+Jalankan perintah berikut di terminal repositori Anda untuk mengaktifkan gerbang pre-commit lokal:
+
+```bash
+# Aktifkan path githooks bawaan repositori
+git config core.hooksPath .githooks
+
+# Berikan hak eksekusi pada hook (untuk Linux / macOS / Git Bash)
+chmod +x .githooks/pre-commit
+```
+
+### 2. Alur Pengerjaan Fitur (Vertical Slice)
+1. Tentukan modul pada [docs/PURSUIT_GOALS.md](docs/PURSUIT_GOALS.md).
+2. Gunakan AI dengan pedoman di [AGENTS.md](AGENTS.md) untuk membuat backend, antarmuka PWA, dan pengujian unit.
+3. Jalankan `git commit`. Hook lokal akan otomatis memvalidasi kebersihan kode.
+4. Buat Pull Request. Pipeline GitHub Actions akan menguji modul sebelum di-merge.
+
+---
+
+## 📖 Dokumentasi Lengkap
+Pelajari arsitektur dan kontrol keamanan secara mendalam pada:
+- 📘 [docs/model-kerja.md](docs/model-kerja.md) (Dokumentasi Model Kerja & Standar Keamanan PHP, MySQL, PWA)
+- 🎯 [docs/PURSUIT_GOALS.md](docs/PURSUIT_GOALS.md) (Matriks Sasaran Capaian & Pelacakan Modul)
+- 🤖 [AGENTS.md](AGENTS.md) (Instruksi Mutlak untuk AI Coding Agents)

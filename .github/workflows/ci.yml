@@ -1,0 +1,46 @@
+name: DevSecOps CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  quality-and-security-gates:
+    name: Deterministic Quality & Security Gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 2. Setup PHP 8.2 Environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo, pdo_mysql
+          tools: composer:v2
+
+      - name: 3. Secret Scanning (Gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 4. PHP Syntax Linting
+        run: |
+          find app/ public/ -name "*.php" -print0 | xargs -0 -n1 php -l
+
+      - name: 5. Audit Dependensi Komposer (Vulnerabilities Scan)
+        run: composer audit
+
+      - name: 6. Install Dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: 7. Static Application Security Testing (PHPStan Level 6)
+        run: vendor/bin/phpstan analyse -c phpstan.neon
+
+      - name: 8. Automated Unit & Security Test Suites (PHPUnit)
+        run: vendor/bin/phpunit --testdox

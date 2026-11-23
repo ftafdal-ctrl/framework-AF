@@ -1,0 +1,34 @@
+# Environment & Credentials
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Composer & Dependencies
+/vendor/
+composer.phar
+
+# Storage & Temporary Files
+/storage/logs/*.log
+/storage/uploads/*
+!/storage/logs/.gitkeep
+!/storage/uploads/.gitkeep
+
+# IDE & Editor Settings
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing & Coverage
+.phpunit.result.cache
+/coverage/
