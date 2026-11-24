@@ -31,16 +31,46 @@ jobs:
 
       - name: 4. PHP Syntax Linting
         run: |
-          find app/ public/ -name "*.php" -print0 | xargs -0 -n1 php -l
+          if [ -d "app" ] || [ -d "public" ]; then
+            echo "Memeriksa sintaks PHP..."
+            find app/ public/ -type f -name "*.php" -print0 2>/dev/null | xargs -0 -r -n1 php -l
+          else
+            echo "Direktori app/ atau public/ belum ada, melewati linting sintaks."
+          fi
 
       - name: 5. Audit Dependensi Komposer (Vulnerabilities Scan)
-        run: composer audit
+        run: |
+          if [ -f "composer.json" ]; then
+            echo "composer.json ditemukan. Menjalankan composer audit..."
+            composer validate --strict --no-check-all
+            composer audit
+          else
+            echo "composer.json belum ada di repositori. Melewati audit dependensi."
+          fi
 
       - name: 6. Install Dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
+        run: |
+          if [ -f "composer.json" ]; then
+            echo "Menginstal paket dependensi via Composer..."
+            composer install --prefer-dist --no-progress --no-interaction
+          else
+            echo "composer.json belum ada di repositori. Melewati instalasi dependensi."
+          fi
 
       - name: 7. Static Application Security Testing (PHPStan Level 6)
-        run: vendor/bin/phpstan analyse -c phpstan.neon
+        run: |
+          if [ -f "vendor/bin/phpstan" ] && [ -d "app" ]; then
+            echo "Menjalankan PHPStan Level 6..."
+            vendor/bin/phpstan analyse -c phpstan.neon
+          else
+            echo "PHPStan atau folder app belum siap. Melewati analisis statis."
+          fi
 
       - name: 8. Automated Unit & Security Test Suites (PHPUnit)
-        run: vendor/bin/phpunit --testdox
+        run: |
+          if [ -f "vendor/bin/phpunit" ] && [ -d "tests" ]; then
+            echo "Menjalankan pengujian otomatis PHPUnit..."
+            vendor/bin/phpunit --testdox
+          else
+            echo "PHPUnit atau folder tests belum siap. Melewati test suite."
+          fi

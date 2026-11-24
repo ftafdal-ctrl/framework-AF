@@ -1,0 +1,36 @@
+{
+    "name": "ftafdal-ctrl/framework-af",
+    "description": "Production-Hardened AI Agent Governance & Execution-Driven Engineering Framework (PHP 8.2+, MySQL 8, PWA, DevSecOps)",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ftafdal-ctrl",
+            "email": "ftafdal@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.11",
+        "phpunit/phpunit": "^10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
