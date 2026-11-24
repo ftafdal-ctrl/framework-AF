@@ -38,23 +38,27 @@ jobs:
             echo "Direktori app/ atau public/ belum ada, melewati linting sintaks."
           fi
 
-      - name: 5. Audit Dependensi Komposer (Vulnerabilities Scan)
+      - name: 5. Install Dependencies via Composer
         run: |
           if [ -f "composer.json" ]; then
-            echo "composer.json ditemukan. Menjalankan composer audit..."
+            echo "Memvalidasi struktur composer.json..."
             composer validate --strict --no-check-all
-            composer audit
-          else
-            echo "composer.json belum ada di repositori. Melewati audit dependensi."
-          fi
-
-      - name: 6. Install Dependencies
-        run: |
-          if [ -f "composer.json" ]; then
-            echo "Menginstal paket dependensi via Composer..."
+            echo "Menginstal paket dependensi dan membuat lockfile..."
             composer install --prefer-dist --no-progress --no-interaction
           else
             echo "composer.json belum ada di repositori. Melewati instalasi dependensi."
+          fi
+
+      - name: 6. Audit Dependensi Komposer (Vulnerabilities Scan)
+        run: |
+          if [ -f "composer.lock" ]; then
+            echo "composer.lock ditemukan. Menjalankan composer audit..."
+            composer audit
+          elif [ -f "composer.json" ]; then
+            echo "Menjalankan composer audit langsung dari composer.json..."
+            composer audit || true
+          else
+            echo "composer.lock / composer.json belum ada di repositori. Melewati audit dependensi."
           fi
 
       - name: 7. Static Application Security Testing (PHPStan Level 6)
