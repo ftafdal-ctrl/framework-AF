@@ -11,7 +11,7 @@ Dokumen ini digunakan oleh tim rekayasa dan AI Agent untuk melacak progress peny
 | **G-01: Fungsionalitas Modul** | 100% User Story selesai dan dapat diuji | 🟡 Dalam Pengerjaan | Sesuai backlog prioritas |
 | **G-02: Zero Vulnerability** | 0 Celah Kritis / Tinggi (OWASP Top 10) | 🟢 Terjaga | SAST & Review aktif |
 | **G-03: Zero Secret Leak** | 0 Kredensial / Token bocor ke Git | 🟢 Terjaga | Gitleaks aktif di pre-commit |
-| **G-04: Deterministic Quality** | PHP Lint 100%, PHPStan Lv 6, PHPUnit 100% | 🟢 Terjaga | Pipeline CI/CD terkonfigurasi |
+| **G-04: Deterministic Quality** | PHP Lint 100%, PHPStan Lv 6, PHPUnit 100% | 🟢 Lulus Terverifikasi | Pipeline CI/CD GitHub Actions lulus 100% |
 | **G-05: PWA & Mobile Ready** | Lighthouse PWA ≥ 90, Offline Fallback | 🟡 Dalam Pengerjaan | Service Worker terpasang |
 
 ---

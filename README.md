@@ -1,5 +1,11 @@
 # Framework-AF
 
+[![DevSecOps CI Pipeline](https://github.com/ftafdal-ctrl/framework-AF/actions/workflows/ci.yml/badge.svg)](https://github.com/ftafdal-ctrl/framework-AF/actions/workflows/ci.yml)
+![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)
+![MySQL 8](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)
+![PWA Ready](https://img.shields.io/badge/PWA-Ready-5A0FC8?logo=pwa&logoColor=white)
+![License MIT](https://img.shields.io/badge/license-MIT-green)
+
 > **Production-Hardened AI Agent Governance & Execution-Driven Engineering**  
 > *Standar Rekayasa Perangkat Lunak Aman Berbasis PHP 8.2+, MySQL 8, PWA, dan DevSecOps.*
 
